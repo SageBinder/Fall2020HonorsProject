@@ -1,0 +1,57 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <option name="OTHER_INDENT_OPTIONS">
+      <value>
+        <option name="INDENT_SIZE" value="2" />
+        <option name="TAB_SIZE" value="2" />
+      </value>
+    </option>
+    <JetCodeStyleSettings>
+      <option name="PACKAGES_TO_USE_STAR_IMPORTS">
+        <value>
+          <package name="java.util" alias="false" withSubpackages="false" />
+          <package name="kotlinx.android.synthetic" alias="false" withSubpackages="true" />
+          <package name="io.ktor" alias="false" withSubpackages="true" />
+        </value>
+      </option>
+      <option name="PACKAGES_IMPORT_LAYOUT">
+        <value>
+          <package name="" alias="false" withSubpackages="true" />
+          <package name="java" alias="false" withSubpackages="true" />
+          <package name="javax" alias="false" withSubpackages="true" />
+          <package name="kotlin" alias="false" withSubpackages="true" />
+          <package name="" alias="true" withSubpackages="true" />
+        </value>
+      </option>
+    </JetCodeStyleSettings>
+    <ScalaCodeStyleSettings>
+      <option name="MULTILINE_STRING_CLOSING_QUOTES_ON_NEW_LINE" value="true" />
+    </ScalaCodeStyleSettings>
+    <codeStyleSettings language="JAVA">
+      <option name="SPACE_WITHIN_ARRAY_INITIALIZER_BRACES" value="true" />
+      <option name="SPACE_AFTER_TYPE_CAST" value="false" />
+      <option name="SPACE_BEFORE_IF_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_FOR_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_TRY_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_SYNCHRONIZED_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_ARRAY_INITIALIZER_LBRACE" value="true" />
+    </codeStyleSettings>
+    <codeStyleSettings language="Latex">
+      <option name="LINE_COMMENT_AT_FIRST_COLUMN" value="false" />
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="4" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="ObjectiveC">
+      <option name="INDENT_CASE_FROM_SWITCH" value="false" />
+      <option name="SPACE_BEFORE_IF_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_FOR_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="false" />
+    </codeStyleSettings>
+  </code_scheme>
+</component>
