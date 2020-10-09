@@ -38,6 +38,10 @@ public abstract class Node {
     }
 
     public String[] variables() {
+        if(this instanceof BOOLEAN_VAR) {
+            return new String[] { tag };
+        }
+
         Set<String> inputs = new HashSet<>();
 
         for(Node nextNode : getParents()) {

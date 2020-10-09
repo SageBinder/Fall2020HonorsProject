@@ -6,11 +6,6 @@ U_QUANT : [*∀] ;
 
 E_QUANT : [+∃] ;
 
-//// Quantifiers:
-//U_QUANT : LBRACKET [∀A]? LBRACKET (IDENTIFIER) (',' IDENTIFIER)* RBRACKET RBRACKET ;
-//
-//E_QUANT : LBRACKET [∃E]? LBRACKET (IDENTIFIER) (',' IDENTIFIER)* RBRACKET RBRACKET ;
-
 // Boolean operators:
 NOT : [~˜!¬] ;
 
@@ -29,11 +24,14 @@ OR
 IF
   : [>⇒→⊃]
   | '->'
+  | '=>'
   ;
 
 IFF
   : [⇔↔≡=]
   | '=='
+  | '<=>'
+  | '<->'
   ;
 
 // Constants:

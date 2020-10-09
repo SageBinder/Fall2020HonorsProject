@@ -8,7 +8,7 @@ import sage.java.antlrparser.ExpressionParser;
 
 public class Main {
     public static void main(String[] args) {
-        var input = "¬(A ∧ B) ⇔ (¬A ∨ ¬B)";
+        var input = "((p -> (q -> r)) & (~s | p) & q) => (s -> r)";
 
         var lexer = new ExpressionLexer(CharStreams.fromString(input));
         var tokens = new CommonTokenStream(lexer);

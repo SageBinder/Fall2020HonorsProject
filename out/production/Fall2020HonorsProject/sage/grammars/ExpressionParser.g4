@@ -6,11 +6,11 @@ import sage.java.nodes.base.Node;
 }
 
 binaryOp
-  : opToken=AND  # AND
-  | opToken=NAND # NAND
-  | opToken=OR   # OR
-  | opToken=IF   # IF
-  | opToken=IFF  # IFF
+  : AND  # AND
+  | NAND # NAND
+  | OR   # OR
+  | IF   # IF
+  | IFF  # IFF
   ;
 
 rightOp

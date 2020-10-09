@@ -109,7 +109,6 @@ public class ExpressionParser extends Parser {
 		}
 	}
 	public static class ORContext extends BinaryOpContext {
-		public Token opToken;
 		public TerminalNode OR() { return getToken(ExpressionParser.OR, 0); }
 		public ORContext(BinaryOpContext ctx) { copyFrom(ctx); }
 		@Override
@@ -127,7 +126,6 @@ public class ExpressionParser extends Parser {
 		}
 	}
 	public static class ANDContext extends BinaryOpContext {
-		public Token opToken;
 		public TerminalNode AND() { return getToken(ExpressionParser.AND, 0); }
 		public ANDContext(BinaryOpContext ctx) { copyFrom(ctx); }
 		@Override
@@ -145,7 +143,6 @@ public class ExpressionParser extends Parser {
 		}
 	}
 	public static class IFFContext extends BinaryOpContext {
-		public Token opToken;
 		public TerminalNode IFF() { return getToken(ExpressionParser.IFF, 0); }
 		public IFFContext(BinaryOpContext ctx) { copyFrom(ctx); }
 		@Override
@@ -163,7 +160,6 @@ public class ExpressionParser extends Parser {
 		}
 	}
 	public static class NANDContext extends BinaryOpContext {
-		public Token opToken;
 		public TerminalNode NAND() { return getToken(ExpressionParser.NAND, 0); }
 		public NANDContext(BinaryOpContext ctx) { copyFrom(ctx); }
 		@Override
@@ -181,7 +177,6 @@ public class ExpressionParser extends Parser {
 		}
 	}
 	public static class IFContext extends BinaryOpContext {
-		public Token opToken;
 		public TerminalNode IF() { return getToken(ExpressionParser.IF, 0); }
 		public IFContext(BinaryOpContext ctx) { copyFrom(ctx); }
 		@Override
@@ -211,7 +206,7 @@ public class ExpressionParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(12);
-				((ANDContext)_localctx).opToken = match(AND);
+				match(AND);
 				}
 				break;
 			case NAND:
@@ -219,7 +214,7 @@ public class ExpressionParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(13);
-				((NANDContext)_localctx).opToken = match(NAND);
+				match(NAND);
 				}
 				break;
 			case OR:
@@ -227,7 +222,7 @@ public class ExpressionParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(14);
-				((ORContext)_localctx).opToken = match(OR);
+				match(OR);
 				}
 				break;
 			case IF:
@@ -235,7 +230,7 @@ public class ExpressionParser extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(15);
-				((IFContext)_localctx).opToken = match(IF);
+				match(IF);
 				}
 				break;
 			case IFF:
@@ -243,7 +238,7 @@ public class ExpressionParser extends Parser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(16);
-				((IFFContext)_localctx).opToken = match(IFF);
+				match(IFF);
 				}
 				break;
 			default:
