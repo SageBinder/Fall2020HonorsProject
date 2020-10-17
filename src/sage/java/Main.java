@@ -8,7 +8,7 @@ import sage.java.antlrparser.ExpressionParser;
 
 public class Main {
     public static void main(String[] args) {
-        var input = "((p -> (q -> r)) & (~s | p) & q) => (s -> r)";
+        var input = "~(P & Q) <=> (~P | ~Q)";
 
         var lexer = new ExpressionLexer(CharStreams.fromString(input));
         var tokens = new CommonTokenStream(lexer);
@@ -17,6 +17,7 @@ public class Main {
 
         var extractor = new ExpressionListener(parser);
         ParseTreeWalker.DEFAULT.walk(extractor, tree);
+        System.out.println("\n\nTruth table for " + tree.node.tag + ":\n");
         System.out.println(tree.node.generateBooleanTruthTable());
     }
 }

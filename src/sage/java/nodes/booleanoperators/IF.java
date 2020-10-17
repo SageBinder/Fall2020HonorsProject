@@ -14,7 +14,7 @@ public class IF extends Node2 {
     }
 
     @Override
-    protected boolean _evaluate(Node antecedent, Node consequent, GraphInputs inputs) {
-        return !antecedent.evaluate(inputs) || consequent.evaluate(inputs);
+    protected boolean _evaluate(Node child1, Node child2, GraphInputs inputs) {
+        return !child1.evaluate(inputs) || child2.evaluate(inputs);
     }
 }

@@ -8,30 +8,45 @@ import java.util.stream.Collectors;
 
 public abstract class Node {
     public final String tag;
-    private final Node[] parents;
+    private final Node[] children;
 
-    public Node(Node... parents) {
-        this("", parents);
+    public Node(Node... children) {
+        this("", children);
     }
 
-    public Node(String tag, Node... parents) {
-        for(var obj : parents) {
+    public Node(String tag, Node... children) {
+        for(var obj : children) {
             Objects.requireNonNull(obj);
         }
 
         this.tag = tag;
-        this.parents = parents;
+        this.children = children;
     }
 
-    public final Node[] getParents() {
-        return parents.clone();
+    public final Node[] getChildren() {
+        return children.clone();
     }
 
     public final boolean evaluate(GraphInputs inputs) {
-        return _evaluate(parents, inputs);
+        return _evaluate(children, inputs);
     }
 
-    protected abstract boolean _evaluate(Node[] parents, GraphInputs inputs);
+    public final Boolean[] evaluate(GraphInputs[] inputs) {
+        return Arrays.stream(inputs).map(this::evaluate).toArray(Boolean[]::new);
+    }
+
+    public final Map<Node, Boolean[]> evaluateEach(GraphInputs[] inputs) {
+        Map<Node, Boolean[]> truthMap = new LinkedHashMap<>();
+
+        for(var child : getChildren()) {
+            truthMap.putAll(child.evaluateEach(inputs));
+        }
+        truthMap.put(this, evaluate(inputs));
+
+        return truthMap;
+    }
+
+    protected abstract boolean _evaluate(Node[] children, GraphInputs inputs);
 
     public String getTag() {
         return tag;
@@ -44,7 +59,7 @@ public abstract class Node {
 
         Set<String> inputs = new HashSet<>();
 
-        for(Node nextNode : getParents()) {
+        for(Node nextNode : getChildren()) {
             if(nextNode instanceof BOOLEAN_VAR var) {
                 inputs.add(var.tag);
             } else {
@@ -57,49 +72,75 @@ public abstract class Node {
 
     public String generateBooleanTruthTable() {
         String[] variables = variables();
-        double numPermutations = variables.length == 0 ? 0 : Math.pow(2, variables.length);
+        int numRows = variables.length == 0 ? 0 : (int)Math.pow(2, variables.length);
+        GraphInputs[] inputs = new GraphInputs[numRows];
 
-        var truthTableString = new StringBuilder();
-        truthTableString
-                .append(String.join(" | ", List.of(variables)))
-                .append(" | ")
-                .append(tag)
-                .append("\n")
-                .append(Arrays.stream(variables)
-                        .map(var -> "-".repeat(var.length()))
-                        .collect(Collectors.joining("-|-")))
-                .append("-|-")
-                .append("-".repeat(tag.length()))
-                .append("\n");
-
-        for(short currPermutation = 0; currPermutation < numPermutations; currPermutation++) {
-            // Setting up GraphInputs and evaluating graph:
+        // Generating all possible inputs
+        for(int currInput = 0; currInput < numRows; currInput++) {
             var variableInputs = new GraphInputs.BooleanVariableMap();
-            for(short varIdx = 0; varIdx < variables.length; varIdx++) {
-                variableInputs.put(variables[varIdx], ((1 << varIdx) & currPermutation) > 0);
+            for(int varIdx = 0; varIdx < variables.length; varIdx++) {
+                variableInputs.put(variables[varIdx], ((1 << varIdx) & currInput) > 0);
+            }
+            inputs[currInput] = new GraphInputs().setBooleanVariableMap(variableInputs);
+        }
+
+        // Obtaining truth map which will be used for generating the truth table
+        Map<Node, Boolean[]> truthMap = evaluateEach(inputs);
+        Node[] nodeArray = truthMap.keySet().stream()
+                .filter(node -> !(node instanceof BOOLEAN_VAR))
+                .toArray(Node[]::new);
+
+        // --- All code following this comment is for generating the truth table string ---
+
+        List<List<String>> truthTableStringMatrix = new ArrayList<>();
+        truthTableStringMatrix.add(new ArrayList<>(Arrays.asList(variables)));
+        truthTableStringMatrix.get(0)
+                .addAll(Arrays.stream(nodeArray)
+                        .map(node -> node.tag)
+                        .collect(Collectors.toList()));
+
+        for(int row = 0; row < numRows; row++) {
+            truthTableStringMatrix.add(new ArrayList<>());
+            var currRow = truthTableStringMatrix.get(row + 1);
+
+            for(String var : variables) {
+                assert inputs[row].getBooleanVariableMap().isPresent(); // Probably shouldn't be an assertion but whatevs
+                currRow.add(inputs[row].getBooleanVariableMap().get().get(var) ? "1" : "0");
             }
 
-            boolean result = evaluate(new GraphInputs().setBooleanVariableMap(variableInputs));
+            for(Node node : nodeArray) {
+                currRow.add(truthMap.get(node)[row] ? "1" : "0");
+            }
+        }
 
-            // Generating string for this row of the truth table:
-            var currPermutationString = new StringBuilder(Integer.toString(currPermutation, 2));
-            currPermutationString
-                    .insert(0, "0".repeat(Math.max(0, variables.length - currPermutationString.length())));
+        List<String> headerStringList = truthTableStringMatrix.get(0);
+        String header = String.join(" | ", headerStringList);
 
-            var bitsCharList = currPermutationString.reverse().toString().split("");
-            for(int i = 0; i < bitsCharList.length; i++) {
-                truthTableString
-                        .append(bitsCharList[i])
-                        .append(" ".repeat(variables[i].length() - 1))
-                        .append(" | ");
+        var stringTableBuilder = new StringBuilder()
+                .append(header)
+                .append("\n")
+                .append(headerStringList.stream()
+                        .map(colLabel -> "-".repeat(colLabel.length()))
+                        .collect(Collectors.joining("-|-")))
+                .append("\n");
+        for(int rowIdx = 1; rowIdx < truthTableStringMatrix.size(); rowIdx++) {
+            var headerRow = truthTableStringMatrix.get(0);
+            var row = truthTableStringMatrix.get(rowIdx);
+            List<String> rowStringList = new ArrayList<>();
+
+            for(int colIdx = 0; colIdx < row.size(); colIdx++) {
+                String entry = row.get(colIdx);
+                int rowEntryLength = entry.length();
+                int headerEntryLength = headerRow.get(colIdx).length();
+                rowStringList.add(entry + " ".repeat(Math.max(0, headerEntryLength - rowEntryLength)));
             }
 
-            truthTableString
-                    .append(result)
+            stringTableBuilder
+                    .append(String.join(" | ", rowStringList))
                     .append("\n");
         }
 
-        return truthTableString.toString();
+        return stringTableBuilder.toString();
     }
 
     @Override

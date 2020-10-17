@@ -14,18 +14,22 @@ public class EXISTENTIAL_QUANTIFIER extends Node1 {
     }
 
     @Override
-    protected boolean _evaluate(Node parent, GraphInputs inputs) {
+    protected boolean _evaluate(Node child, GraphInputs inputs) {
         var UD = inputs.getUD().orElseThrow(() ->
                 new InvalidInputException("Error: EXISTENTIAL_QUANTIFIER node could not find any universe of discourse"));
 
-        GraphInputs.BoundedVariableMap currentMap = inputs.getBoundedVariableMap().orElse(new GraphInputs.BoundedVariableMap());
+        var currentMap = inputs.getPredicateVariableMap().orElse(new GraphInputs.PredicateVariableMap());
 
-        return UD.stream().anyMatch(var -> {
-            GraphInputs.BoundedVariableMap newMap = new GraphInputs.BoundedVariableMap(currentMap);
-            newMap.put(bindingVariable, var);
-            inputs.setBoundedVariableMap(newMap);
+        try {
+            return UD.stream().anyMatch(var -> {
+                var newMap = new GraphInputs.PredicateVariableMap(currentMap);
+                newMap.put(bindingVariable, var);
+                inputs.setPredicateVariableMap(newMap);
 
-            return parent.evaluate(inputs);
-        });
+                return child.evaluate(inputs);
+            });
+        } finally {
+            inputs.setPredicateVariableMap(currentMap);
+        }
     }
 }

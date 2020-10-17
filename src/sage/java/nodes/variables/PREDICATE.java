@@ -18,23 +18,23 @@ public class PREDICATE extends Node0 {
 
     @Override
     protected boolean _evaluate(GraphInputs inputs) {
-        var sentenceMap = inputs.getSentenceMap().orElseThrow(() ->
-                new InvalidInputException("Error: PREDICATE node could not find a sentence variable map."));
+        var truthMap = inputs.getPredicateTruthMap().orElseThrow(() ->
+                new InvalidInputException("Error: PREDICATE node could not find a predicate truth map."));
 
-        if(sentenceMap.containsKey(predicateName)) {
-            var truthEntries = sentenceMap.get(predicateName);
-            var boundedVariableMapOptional = inputs.getBoundedVariableMap();
-            if(boundedVariableMapOptional.isPresent()) {
-                var boundedVariableMap = boundedVariableMapOptional.get();
-                var mappedVariables = inputVariables.stream().map(var -> boundedVariableMap.getOrDefault(var, var));
-                var thisEntry = new GraphInputs.SentenceMap.TruthEntry(mappedVariables.toArray(String[]::new));
+        if(truthMap.containsKey(predicateName)) {
+            var truthEntries = truthMap.get(predicateName);
+            var predicateVariableMapOptional = inputs.getPredicateVariableMap();
+            if(predicateVariableMapOptional.isPresent()) {
+                var predicateVariableMap = predicateVariableMapOptional.get();
+                var mappedVariables = inputVariables.stream().map(var -> predicateVariableMap.getOrDefault(var, var));
+                var thisEntry = new GraphInputs.PredicateTruthMap.TruthEntry(mappedVariables.toArray(String[]::new));
 
                 return truthEntries.contains(thisEntry);
             } else {
-                throw new InvalidInputException("Error: PREDICATE node could not find a bounded variable map");
+                throw new InvalidInputException("Error: PREDICATE node \"" + predicateName + "\" could not find a predicate variable map");
             }
         } else {
-            throw new InvalidInputException("Error: PREDICATE node could not find a truth-entry set within the sentence variable map");
+            throw new InvalidInputException("Error: PREDICATE node \"" + predicateName + "\" could not find an associated truth-set entry in the predicate truth map.");
         }
     }
 }

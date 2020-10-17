@@ -4,16 +4,16 @@ import sage.java.graph.GraphInputs;
 import sage.java.nodes.base.Node;
 
 public class NAND extends AND {
-    public NAND(Node parent1, Node parent2) {
-        super(parent1, parent2);
+    public NAND(Node child1, Node child2) {
+        super(child1, child2);
     }
 
-    public NAND(String tag, Node parent1, Node parent2) {
-        super(tag, parent1, parent2);
+    public NAND(String tag, Node child1, Node child2) {
+        super(tag, child1, child2);
     }
 
     @Override
-    protected boolean _evaluate(Node parent1, Node parent2, GraphInputs inputs) {
-        return !super._evaluate(parent1, parent2, inputs);
+    protected boolean _evaluate(Node child1, Node child2, GraphInputs inputs) {
+        return !super._evaluate(child1, child2, inputs);
     }
 }

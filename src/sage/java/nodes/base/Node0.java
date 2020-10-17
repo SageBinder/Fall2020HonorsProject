@@ -12,7 +12,7 @@ public abstract class Node0 extends Node {
     }
 
     @Override
-    protected final boolean _evaluate(Node[] parents, GraphInputs inputs) {
+    protected final boolean _evaluate(Node[] children, GraphInputs inputs) {
         return _evaluate(inputs);
     }
 

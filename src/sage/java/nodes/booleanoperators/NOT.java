@@ -5,8 +5,8 @@ import sage.java.nodes.base.Node;
 import sage.java.nodes.base.Node1;
 
 public class NOT extends Node1 {
-    public NOT(Node input) {
-        super(input);
+    public NOT(Node child) {
+        super(child);
     }
 
     public NOT(String tag, Node input) {
@@ -14,7 +14,7 @@ public class NOT extends Node1 {
     }
 
     @Override
-    protected boolean _evaluate(Node parent, GraphInputs inputs) {
-        return !parent.evaluate(inputs);
+    protected boolean _evaluate(Node child, GraphInputs inputs) {
+        return !child.evaluate(inputs);
     }
 }
