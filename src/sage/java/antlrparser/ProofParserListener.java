@@ -206,15 +206,25 @@ public interface ProofParserListener extends ParseTreeListener {
 	 */
 	void exitRightOpExpression(ProofParser.RightOpExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProofParser#logicRule}.
+	 * Enter a parse tree produced by {@link ProofParser#ruleType}.
 	 * @param ctx the parse tree
 	 */
-	void enterLogicRule(ProofParser.LogicRuleContext ctx);
+	void enterRuleType(ProofParser.RuleTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProofParser#logicRule}.
+	 * Exit a parse tree produced by {@link ProofParser#ruleType}.
 	 * @param ctx the parse tree
 	 */
-	void exitLogicRule(ProofParser.LogicRuleContext ctx);
+	void exitRuleType(ProofParser.RuleTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProofParser#ruleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRuleExpression(ProofParser.RuleExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProofParser#ruleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRuleExpression(ProofParser.RuleExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProofParser#premise}.
 	 * @param ctx the parse tree

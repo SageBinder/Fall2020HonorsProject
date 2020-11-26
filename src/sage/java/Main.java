@@ -5,7 +5,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import sage.java.antlrparser.ProofLexer;
 import sage.java.antlrparser.ProofParser;
-import sage.java.proof.Proof;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -20,19 +19,19 @@ public class Main {
                     (*(x))(F(x) | G(x)) ;
                     (*(x))(F(x) > G(x)) ;
                 ]{
-                    F(a) | G(a) ; DC ;
-                    F(a) > G(a) ; DC ;
-                    F(a) | ¬G(a) ; DC ;
-                
+                    F(a) | G(a)  # *E, 1 ;
+                    F(a) > G(a)  # *E, 2 ;
+                    F(a) | ~G(a) # C, 4 ;
+                                
                     assume [
                         ~G(a) ;
                     ]{
-                        F(a)  ; DC ;
-                        ~F(a) ; DC ;
+                        F(a)  # |E, 3 ;
+                        ~F(a) # DC, 4, 6 ;
                     }
-                
-                    G(a)          ; DC ;
-                    (*(x))(G(x))  ; DC ;
+                                
+                    G(a)          # RD, 6, 7, 8 ;
+                    (*(x))(G(x))  # *I, 9 ;
                 }""";
 
         var lexer = new ProofLexer(CharStreams.fromString(input));

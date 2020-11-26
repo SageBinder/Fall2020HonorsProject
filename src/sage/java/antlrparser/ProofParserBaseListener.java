@@ -224,13 +224,25 @@ public class ProofParserBaseListener implements ProofParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLogicRule(ProofParser.LogicRuleContext ctx) { }
+	@Override public void enterRuleType(ProofParser.RuleTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLogicRule(ProofParser.LogicRuleContext ctx) { }
+	@Override public void exitRuleType(ProofParser.RuleTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRuleExpression(ProofParser.RuleExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRuleExpression(ProofParser.RuleExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

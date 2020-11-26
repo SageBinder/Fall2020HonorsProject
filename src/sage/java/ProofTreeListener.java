@@ -27,36 +27,36 @@ public class ProofTreeListener extends ProofParserBaseListener {
     // --- SENTENCE PARSING --- \\
     @Override
     public void exitBracketedExpression(ProofParser.BracketedExpressionContext ctx) {
-        ctx.node = ctx.exp.node;
+        ctx.node = ctx.sentence().node;
     }
 
     @Override
     public void exitBinaryOpExpression(ProofParser.BinaryOpExpressionContext ctx) {
-        var parent1 = ctx.exp1.node;
-        var parent2 = ctx.exp2.node;
-        var tag = ctx.getText();
+        var child1 = ctx.sentence1.node;
+        var child2 = ctx.sentence2.node;
+        var tag = ctx.sentence1.getText() + " " + ctx.binaryOp().getText() + " " + ctx.sentence2.getText();
 
-        if(ctx.op instanceof ProofParser.ANDContext) {
-            ctx.node = new AND(tag, parent1, parent2);
-        } else if(ctx.op instanceof ProofParser.NANDContext) {
-            ctx.node = new NAND(tag, parent1, parent2);
-        } else if(ctx.op instanceof ProofParser.ORContext) {
-            ctx.node = new OR(tag, parent1, parent2);
-        } else if(ctx.op instanceof ProofParser.IFContext) {
-            ctx.node = new IF(tag, parent1, parent2);
-        } else if(ctx.op instanceof ProofParser.IFFContext) {
-            ctx.node = new IFF(tag, parent1, parent2);
+        if(ctx.binaryOp() instanceof ProofParser.ANDContext) {
+            ctx.node = new AND(tag, child1, child2);
+        } else if(ctx.binaryOp() instanceof ProofParser.NANDContext) {
+            ctx.node = new NAND(tag, child1, child2);
+        } else if(ctx.binaryOp() instanceof ProofParser.ORContext) {
+            ctx.node = new OR(tag, child1, child2);
+        } else if(ctx.binaryOp() instanceof ProofParser.IFContext) {
+            ctx.node = new IF(tag, child1, child2);
+        } else if(ctx.binaryOp() instanceof ProofParser.IFFContext) {
+            ctx.node = new IFF(tag, child1, child2);
         }
     }
 
     @Override
     public void exitRightOpExpression(ProofParser.RightOpExpressionContext ctx) {
-        var parent = ctx.exp.node;
+        var child = ctx.sentence().node;
         var tag = ctx.getText();
 
-        if(ctx.op instanceof ProofParser.NOTContext) {
-            ctx.node = new NOT(tag, parent);
-        } else if(ctx.op instanceof ProofParser.QUANTIFIERContext quantCtx) {
+        if(ctx.rightOp() instanceof ProofParser.NOTContext) {
+            ctx.node = new NOT(tag, child);
+        } else if(ctx.rightOp() instanceof ProofParser.QUANTIFIERContext quantCtx) {
             var quantType = quantCtx.quantExpression.quantToken.getType();
             var variables = quantCtx.quantExpression.variables;
 
@@ -65,7 +65,7 @@ public class ProofTreeListener extends ProofParserBaseListener {
             }
 
             interface QuantifierNodeSupplier {
-                Node get(String tag, String bindingVariable, Node parent);
+                Node get(String tag, String bindingVariable, Node child);
             }
 
             QuantifierNodeSupplier supplier;
@@ -77,11 +77,11 @@ public class ProofTreeListener extends ProofParserBaseListener {
                 }
             }
 
-            var lastParent = parent;
+            var lastChild = child;
             for(Token var : variables) {
-                lastParent = supplier.get(tag, var.getText(), lastParent);
+                lastChild = supplier.get(tag, var.getText(), lastChild);
             }
-            ctx.node = lastParent;
+            ctx.node = lastChild;
         }
     }
 
@@ -115,7 +115,7 @@ public class ProofTreeListener extends ProofParserBaseListener {
 
     @Override
     public void exitConclusion(ProofParser.ConclusionContext ctx) {
-        proofStack.peek().addConclusion(ctx.sentence().node, Rule.from(ctx.logicRule()));
+        proofStack.peek().addConclusion(ctx.sentence().node, Rule.fromRuleCtx(ctx.ruleExpression()));
     }
 
     @Override

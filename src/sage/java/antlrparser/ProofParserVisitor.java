@@ -129,11 +129,17 @@ public interface ProofParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRightOpExpression(ProofParser.RightOpExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProofParser#logicRule}.
+	 * Visit a parse tree produced by {@link ProofParser#ruleType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLogicRule(ProofParser.LogicRuleContext ctx);
+	T visitRuleType(ProofParser.RuleTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProofParser#ruleExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRuleExpression(ProofParser.RuleExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProofParser#premise}.
 	 * @param ctx the parse tree
