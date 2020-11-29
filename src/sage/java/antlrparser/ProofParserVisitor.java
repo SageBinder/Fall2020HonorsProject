@@ -94,6 +94,13 @@ public interface ProofParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPredicate(ProofParser.PredicateContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code BoolVarExpression}
+	 * labeled alternative in {@link ProofParser#sentence}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolVarExpression(ProofParser.BoolVarExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BinaryOpExpression}
 	 * labeled alternative in {@link ProofParser#sentence}.
 	 * @param ctx the parse tree
@@ -107,13 +114,6 @@ public interface ProofParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBracketedExpression(ProofParser.BracketedExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code BoolVarExpresion}
-	 * labeled alternative in {@link ProofParser#sentence}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBoolVarExpresion(ProofParser.BoolVarExpresionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code PredicateExpression}
 	 * labeled alternative in {@link ProofParser#sentence}.

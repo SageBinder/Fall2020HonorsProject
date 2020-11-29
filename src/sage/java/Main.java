@@ -30,7 +30,6 @@ public class Main {
         var proofNode = tree.proofConstruct().proofNode;
         var proofLines = proofNode.getLines();
 
-        System.out.println("\n\n");
         System.out.println(String.join("\n", proofLines));
     }
 }

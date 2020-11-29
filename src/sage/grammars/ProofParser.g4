@@ -32,11 +32,11 @@ sentence
   locals [
   Node node
   ]
-  : lbracket sentence rbracket          # BracketedExpression
-  | rightOp sentence                 # RightOpExpression
+  : lbracket sentence rbracket                     # BracketedExpression
+  | rightOp sentence                               # RightOpExpression
   | sentence1=sentence binaryOp sentence2=sentence # BinaryOpExpression
-  | boolVar                                 # BoolVarExpresion
-  | predicate                               # PredicateExpression
+  | boolVar                                        # BoolVarExpression
+  | predicate                                      # PredicateExpression
   ;
 
 ruleType

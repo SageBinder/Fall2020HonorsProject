@@ -164,6 +164,18 @@ public class ProofParserBaseListener implements ProofParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBoolVarExpression(ProofParser.BoolVarExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolVarExpression(ProofParser.BoolVarExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBinaryOpExpression(ProofParser.BinaryOpExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -183,18 +195,6 @@ public class ProofParserBaseListener implements ProofParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBracketedExpression(ProofParser.BracketedExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBoolVarExpresion(ProofParser.BoolVarExpresionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBoolVarExpresion(ProofParser.BoolVarExpresionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

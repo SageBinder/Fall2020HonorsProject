@@ -86,7 +86,7 @@ public class ProofTreeListener extends ProofParserBaseListener {
     }
 
     @Override
-    public void exitBoolVarExpresion(ProofParser.BoolVarExpresionContext ctx) {
+    public void exitBoolVarExpression(ProofParser.BoolVarExpressionContext ctx) {
         ctx.node = new BOOLEAN_VAR(ctx.getText());
     }
 

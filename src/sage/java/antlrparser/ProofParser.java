@@ -707,6 +707,25 @@ public class ProofParser extends Parser {
 			this.node = ctx.node;
 		}
 	}
+	public static class BoolVarExpressionContext extends SentenceContext {
+		public BoolVarContext boolVar() {
+			return getRuleContext(BoolVarContext.class,0);
+		}
+		public BoolVarExpressionContext(SentenceContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ProofParserListener ) ((ProofParserListener)listener).enterBoolVarExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ProofParserListener ) ((ProofParserListener)listener).exitBoolVarExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ProofParserVisitor ) return ((ProofParserVisitor<? extends T>)visitor).visitBoolVarExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class BinaryOpExpressionContext extends SentenceContext {
 		public SentenceContext sentence1;
 		public SentenceContext sentence2;
@@ -756,25 +775,6 @@ public class ProofParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ProofParserVisitor ) return ((ProofParserVisitor<? extends T>)visitor).visitBracketedExpression(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class BoolVarExpresionContext extends SentenceContext {
-		public BoolVarContext boolVar() {
-			return getRuleContext(BoolVarContext.class,0);
-		}
-		public BoolVarExpresionContext(SentenceContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProofParserListener ) ((ProofParserListener)listener).enterBoolVarExpresion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProofParserListener ) ((ProofParserListener)listener).exitBoolVarExpresion(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProofParserVisitor ) return ((ProofParserVisitor<? extends T>)visitor).visitBoolVarExpresion(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -865,7 +865,7 @@ public class ProofParser extends Parser {
 				break;
 			case 3:
 				{
-				_localctx = new BoolVarExpresionContext(_localctx);
+				_localctx = new BoolVarExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(81);

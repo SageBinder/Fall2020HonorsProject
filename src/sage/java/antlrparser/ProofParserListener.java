@@ -146,6 +146,18 @@ public interface ProofParserListener extends ParseTreeListener {
 	 */
 	void exitPredicate(ProofParser.PredicateContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code BoolVarExpression}
+	 * labeled alternative in {@link ProofParser#sentence}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolVarExpression(ProofParser.BoolVarExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BoolVarExpression}
+	 * labeled alternative in {@link ProofParser#sentence}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolVarExpression(ProofParser.BoolVarExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code BinaryOpExpression}
 	 * labeled alternative in {@link ProofParser#sentence}.
 	 * @param ctx the parse tree
@@ -169,18 +181,6 @@ public interface ProofParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBracketedExpression(ProofParser.BracketedExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code BoolVarExpresion}
-	 * labeled alternative in {@link ProofParser#sentence}.
-	 * @param ctx the parse tree
-	 */
-	void enterBoolVarExpresion(ProofParser.BoolVarExpresionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code BoolVarExpresion}
-	 * labeled alternative in {@link ProofParser#sentence}.
-	 * @param ctx the parse tree
-	 */
-	void exitBoolVarExpresion(ProofParser.BoolVarExpresionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code PredicateExpression}
 	 * labeled alternative in {@link ProofParser#sentence}.
