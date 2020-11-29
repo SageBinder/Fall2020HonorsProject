@@ -13,4 +13,8 @@ public final class Conclusion extends ProofNode {
     public Sentence getSentence() {
         return sentence;
     }
+
+    public Rule getRule() {
+        return rule;
+    }
 }

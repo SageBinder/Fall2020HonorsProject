@@ -34,7 +34,7 @@ public class ProofTreeListener extends ProofParserBaseListener {
     public void exitBinaryOpExpression(ProofParser.BinaryOpExpressionContext ctx) {
         var child1 = ctx.sentence1.node;
         var child2 = ctx.sentence2.node;
-        var tag = ctx.sentence1.getText() + " " + ctx.binaryOp().getText() + " " + ctx.sentence2.getText();
+        var tag = ctx.sentence1.node.getTag() + " " + ctx.binaryOp().getText() + " " + ctx.sentence2.node.getTag();
 
         if(ctx.binaryOp() instanceof ProofParser.ANDContext) {
             ctx.node = new AND(tag, child1, child2);

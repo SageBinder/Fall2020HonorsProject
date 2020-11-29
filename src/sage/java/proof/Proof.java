@@ -5,7 +5,6 @@ import sage.java.nodes.base.Node;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class Proof extends ProofNode {
     private final List<Sentence> premises = new ArrayList<>();
@@ -45,28 +44,61 @@ public final class Proof extends ProofNode {
         return children.toArray(new ProofNode[0]);
     }
 
-    public List<String> getLines() {
-        List<String> lines = new ArrayList<>();
+    private List<Line> buildLines(int depth) {
+        List<Line> lines = new ArrayList<>();
 
-        int lastLineLength = 0;
-
+        // Adding premise lines
         for(var premise : premises) {
-            lines.add("| " + premise.sentenceString);
-            lastLineLength = lines.get(lines.size() - 1).length();
+            lines.add(new Line(depth, premise.toString(), depth == 0 ? "Premise" : "Assume"));
         }
 
-        lines.add("|" + "-".repeat(lastLineLength + 1));
+        // Adding the line for the premise divider
+        lines.add(new Line(depth));
 
+        // Adding conclusion and subproof lines
         for(var child : children) {
             if(child instanceof Conclusion childConclusion) {
-                lines.add("| " + childConclusion.getSentence().sentenceString);
+                lines.add(new Line(depth, childConclusion.getSentence().toString(), childConclusion.getRule().toString()));
             } else if(child instanceof Proof childProof) {
-                var childLines = childProof.getLines().stream().map(line -> "|    " + line).collect(Collectors.toList());
-                lines.addAll(childLines);
+                lines.addAll(childProof.buildLines(depth + 1));
             }
         }
 
         return lines;
+    }
+
+    public List<String> getLines() {
+        var lines = buildLines(0);
+        String[] stringLines = new String[lines.size()];
+        int longestSentenceLineLength = 0;
+        int numSentences = 0;
+
+        for(int i = 0; i < lines.size(); i++) {
+            Line line = lines.get(i);
+            if(line.lineType == Line.Type.SENTENCE) {
+                stringLines[i] = "|" + "    |".repeat(line.depth) + " " + line.sentence;
+                if(stringLines[i].length() > longestSentenceLineLength) {
+                    longestSentenceLineLength = stringLines[i].length();
+                }
+                numSentences++;
+            }
+        }
+
+        int maxDigits = Integer.toString(numSentences).length();
+
+        for(int i = 0, lineCount = 1; i < lines.size(); i++) {
+            Line line = lines.get(i);
+            if(line.lineType == Line.Type.SENTENCE) {
+                stringLines[i] += " ".repeat(longestSentenceLineLength - stringLines[i].length() + 2) + line.rule;
+                stringLines[i] = String.format("%" + maxDigits + "d " + stringLines[i], lineCount++);
+            } else {
+                stringLines[i] = " ".repeat(maxDigits + 1) + "|" + "    |".repeat(lines.get(i).depth);
+                stringLines[i] += "-".repeat(longestSentenceLineLength - stringLines[i].length() + 3);
+            }
+
+        }
+
+        return List.of(stringLines);
     }
 
     public List<Sentence> getPremises() {
@@ -98,5 +130,33 @@ public final class Proof extends ProofNode {
 
     private int[] getNextGraphPosition() {
         return ArrayUtils.add(getGraphPosition(), children.size());
+    }
+
+    private static class Line {
+        private final int depth;
+        private final String sentence;
+        private final String rule;
+        private final Type lineType;
+
+        // Conclusion line:
+        private Line(int depth, String sentence, String rule) {
+            lineType = Type.SENTENCE;
+            this.depth = depth;
+            this.sentence = sentence;
+            this.rule = rule;
+        }
+
+        // Premise end line:
+        private Line(int depth) {
+            lineType = Type.PREMISE_END;
+            this.depth = depth;
+            this.sentence = null;
+            this.rule = null;
+        }
+
+        private enum Type {
+            SENTENCE,
+            PREMISE_END
+        }
     }
 }

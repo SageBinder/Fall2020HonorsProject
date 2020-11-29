@@ -4,10 +4,15 @@ import sage.java.nodes.base.Node;
 
 public final class Sentence {
     public final Node baseNode;
-    public final String sentenceString;
+    private final String sentenceString;
 
     public Sentence(Node baseNode) {
         this.baseNode = baseNode;
         this.sentenceString = baseNode.tag;
+    }
+
+    @Override
+    public String toString() {
+        return sentenceString;
     }
 }
