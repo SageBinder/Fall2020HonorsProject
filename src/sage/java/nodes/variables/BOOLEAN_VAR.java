@@ -17,17 +17,17 @@ public class BOOLEAN_VAR extends Node0 {
 
         if(variableMapOptional.isPresent()) {
             Map<String, Boolean> variableMap = variableMapOptional.get();
-            if(variableMap.containsKey(tag)) {
-                return variableMap.get(tag);
+            if(variableMap.containsKey(getTag())) {
+                return variableMap.get(getTag());
             } else {
                 throw new InvalidInputException("Error: BOOLEAN_VAR node with the name of \""
-                        + tag
+                        + getTag()
                         + "\" could not find a matching input in the inputs map.");
 
             }
         } else {
             throw new InvalidInputException("Error: BOOLEAN_VAR node with the name of \""
-                    + tag
+                    + getTag()
                     + "\" could not find a variable map.");
         }
     }

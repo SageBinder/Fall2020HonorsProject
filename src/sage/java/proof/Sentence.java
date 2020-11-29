@@ -8,7 +8,7 @@ public final class Sentence {
 
     public Sentence(Node baseNode) {
         this.baseNode = baseNode;
-        this.sentenceString = baseNode.tag;
+        this.sentenceString = baseNode.getTag();
     }
 
     @Override

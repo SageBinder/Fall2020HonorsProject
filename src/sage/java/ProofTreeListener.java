@@ -16,25 +16,20 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class ProofTreeListener extends ProofParserBaseListener {
-    private ProofParser parser;
-
-    private Stack<Proof> proofStack = new Stack<>();
-
-    public ProofTreeListener(ProofParser parser) {
-        this.parser = parser;
-    }
+    private final Stack<Proof> proofStack = new Stack<>();
 
     // --- SENTENCE PARSING --- \\
     @Override
     public void exitBracketedExpression(ProofParser.BracketedExpressionContext ctx) {
         ctx.node = ctx.sentence().node;
+        ctx.node.setTag("(" + ctx.node.getTag() + ")");
     }
 
     @Override
     public void exitBinaryOpExpression(ProofParser.BinaryOpExpressionContext ctx) {
         var child1 = ctx.sentence1.node;
         var child2 = ctx.sentence2.node;
-        var tag = ctx.sentence1.node.getTag() + " " + ctx.binaryOp().getText() + " " + ctx.sentence2.node.getTag();
+        var tag = child1.getTag() + " " + ctx.binaryOp().getText() + " " + child2.getTag();
 
         if(ctx.binaryOp() instanceof ProofParser.ANDContext) {
             ctx.node = new AND(tag, child1, child2);
@@ -52,7 +47,7 @@ public class ProofTreeListener extends ProofParserBaseListener {
     @Override
     public void exitRightOpExpression(ProofParser.RightOpExpressionContext ctx) {
         var child = ctx.sentence().node;
-        var tag = ctx.getText();
+        var tag = ctx.rightOp().getText() + child.getTag();
 
         if(ctx.rightOp() instanceof ProofParser.NOTContext) {
             ctx.node = new NOT(tag, child);

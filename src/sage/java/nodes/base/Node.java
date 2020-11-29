@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class Node {
-    public final String tag;
+    private String tag;
     private final Node[] children;
 
     public Node(Node... children) {
@@ -21,6 +21,14 @@ public abstract class Node {
 
         this.tag = tag;
         this.children = children;
+    }
+
+    public final void setTag(String tag) {
+        this.tag = tag == null ? "" : tag;
+    }
+
+    public String getTag() {
+        return tag;
     }
 
     public final Node[] getChildren() {
@@ -48,10 +56,6 @@ public abstract class Node {
 
     protected abstract boolean _evaluate(Node[] children, GraphInputs inputs);
 
-    public String getTag() {
-        return tag;
-    }
-
     public String[] variables() {
         if(this instanceof BOOLEAN_VAR) {
             return new String[] { tag };
@@ -61,7 +65,7 @@ public abstract class Node {
 
         for(Node nextNode : getChildren()) {
             if(nextNode instanceof BOOLEAN_VAR var) {
-                inputs.add(var.tag);
+                inputs.add(var.getTag());
             } else {
                 inputs.addAll(Set.of(nextNode.variables()));
             }

@@ -25,7 +25,7 @@ public class Main {
         var parser = new ProofParser(tokens);
         var tree = parser.proof();
 
-        var extractor = new ProofTreeListener(parser);
+        var extractor = new ProofTreeListener();
         ParseTreeWalker.DEFAULT.walk(extractor, tree);
         var proofNode = tree.proofConstruct().proofNode;
         var proofLines = proofNode.getLines();
