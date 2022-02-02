@@ -1,4 +1,4 @@
-// Generated from C:/Users/Sage/IdeaProjects/Fall2020HonorsProject/src/sage/grammars\ProofParser.g4 by ANTLR 4.8
+// Generated from C:/Users/Sage/IdeaProjects/Fall2020HonorsProject/src/sage/grammars\ProofParser.g4 by ANTLR 4.9.2
 package sage.java.antlrparser;
 
 import sage.java.nodes.base.Node;

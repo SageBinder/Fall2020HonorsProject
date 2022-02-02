@@ -1,4 +1,4 @@
-// Generated from C:/Users/Sage/IdeaProjects/Fall2020HonorsProject/src/sage/grammars\ProofParser.g4 by ANTLR 4.8
+// Generated from C:/Users/Sage/IdeaProjects/Fall2020HonorsProject/src/sage/grammars\ProofParser.g4 by ANTLR 4.9.2
 package sage.java.antlrparser;
 
 import sage.java.nodes.base.Node;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ProofParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.9.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -45,7 +45,7 @@ public class ProofParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "','", "';'", null, null, null, null, "'.'", null, null, null, 
+			null, "','", "';'", null, null, null, null, "'@'", null, null, null, 
 			null, null, "'assume'", "'premises'", "')'", "'('", "']'", "'['", "'}'", 
 			"'{'", "'#'", null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, "'AC'", "'RD'", "'W'", "'DC'", "'CD'", 

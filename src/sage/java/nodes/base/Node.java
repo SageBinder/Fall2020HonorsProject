@@ -75,6 +75,10 @@ public abstract class Node {
     }
 
     public String generateBooleanTruthTable() {
+        return generateBooleanTruthTable(true);
+    }
+
+    public String generateBooleanTruthTable(boolean mainConnectiveOnly) {
         String[] variables = variables();
         int numRows = variables.length == 0 ? 0 : (int)Math.pow(2, variables.length);
         GraphInputs[] inputs = new GraphInputs[numRows];
@@ -89,19 +93,21 @@ public abstract class Node {
         }
 
         // Obtaining truth map which will be used for generating the truth table
-        Map<Node, Boolean[]> truthMap = evaluateEach(inputs);
+        Map<Node, Boolean[]> truthMap;
+        if(mainConnectiveOnly) {
+            truthMap = new LinkedHashMap<>();
+            truthMap.put(this, evaluate(inputs));
+        } else {
+            truthMap = evaluateEach(inputs);
+        }
         Node[] nodeArray = truthMap.keySet().stream()
                 .filter(node -> !(node instanceof BOOLEAN_VAR))
                 .toArray(Node[]::new);
 
         // --- All code following this comment is for generating the truth table string ---
-
         List<List<String>> truthTableStringMatrix = new ArrayList<>();
         truthTableStringMatrix.add(new ArrayList<>(Arrays.asList(variables)));
-        truthTableStringMatrix.get(0)
-                .addAll(Arrays.stream(nodeArray)
-                        .map(node -> node.tag)
-                        .collect(Collectors.toList()));
+        truthTableStringMatrix.get(0).addAll(Arrays.stream(nodeArray).map(node -> node.tag).toList());
 
         for(int row = 0; row < numRows; row++) {
             truthTableStringMatrix.add(new ArrayList<>());
