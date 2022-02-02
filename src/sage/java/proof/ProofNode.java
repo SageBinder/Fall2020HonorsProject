@@ -2,7 +2,7 @@ package sage.java.proof;
 
 import java.util.Arrays;
 
-public abstract sealed class ProofNode permits Proof, Conclusion {
+public abstract class ProofNode {
     private final int[] graphPosition;
 
     protected ProofNode(int[] graphPosition) {
